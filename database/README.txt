@@ -1,0 +1,1 @@
+Name of the database in phpmyAdmin: musicshop

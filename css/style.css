@@ -1,0 +1,21 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar .nav-link{
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.navbar-toggler{
+    outline:none;
+
+}
+.bg-black{
+    background: black;
+}
+
+
+
