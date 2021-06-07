@@ -3,7 +3,9 @@
         session_start();
     }
     include_once'includes/db_connect.php';
-    include 'header.php'; 
+    include 'header.php';
+    
+    
 ?>
 <html>
     
@@ -163,6 +165,7 @@
                         $custID = $userData['cust_id'];
 
                         //adding data in the orders table
+                        /*
                         $sql = $conn->prepare("INSERT INTO orders(order_price,order_date,cust_id,driver_id) VALUES (:price,:orDate,:cust,:driv)");
                         $sql->bindParam(':price',$total);
                         $sql->bindParam(':orDate',$curDate);
@@ -171,7 +174,19 @@
                     
                         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-                        $sql->execute(); 
+                        $sql->execute();  */
+
+                        $prodId = array_column($_SESSION['cart'],'product_id');
+                        foreach($prodId as $id){
+                            $sql = $conn->prepare("INSERT INTO orders2(prod_id,cust_id,date_purchase,driver_id) VALUES (:pID,:cust,:orDate,:driv)");
+                            $sql->bindParam(':pID',$id);
+                            $sql->bindParam(':orDate',$curDate);
+                            $sql->bindParam(':cust',$custID);
+                            $sql->bindParam(':driv',$driverID);
+                            //print_r($id);
+                            $sql->execute();  
+                        }
+                        
                         
                 
                         // -- END OF UPDATING DATABASE   

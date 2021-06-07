@@ -13,8 +13,8 @@
     <script src="https://kit.fontawesome.com/ac005c1be0.js" crossorigin="anonymous"></script>
     <style>
       .dropbtn {
-          background-color: grey;
-          color: white;
+        
+          background-color: none;
           padding: 16px;
           font-size: 16px;
           border: none;
@@ -51,7 +51,7 @@
       .dropdown:hover .dropdown-content {display: block;}
 
       /* Change the background color of the dropdown button when the dropdown content is shown */
-      .dropdown:hover .dropbtn {background-color: #3e8e41;}
+       /*.dropdown:hover .dropbtn {background-color: #3e8e41;} */
     
     </style>
   </head>
@@ -59,14 +59,11 @@
   <header class="main-header">
 
         <!-- Start Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
 
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
                     <a class="navbar-brand" href="index.php"><img src="images/mylogo.png" class="logo" alt="logo"></a>
                 </div>
                 <!-- End Header Navigation -->
@@ -74,11 +71,15 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                      
                         <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item "><a href="category.php" class="nav-link">Category</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="service.php">Our Service</a></li>
 
+                        <!-- Checking if user is already logged-in using the fname variable in Session Variable
+                             If user is already logged in Then only he will be alble to access the cart, otherwise 
+                             the user won't be allowed to. -->
                         <?php  if (isset($_SESSION['fname'])){?>
                         <a class="nav-link" href="cart.php">
                               <i class="fas fa-shopping-cart fa-2x"></i>
@@ -100,7 +101,9 @@
                       
                 </div>
                 <?php 
+                // Checking is user is logged in
                 if (isset($_SESSION['fname'])) {
+                    //then the system shall display the Username and the capability to Write-Reviews and to Log-Out
                     echo ' 
                     <div class="dropdown">
                       <button class="dropbtn">Hello '.$_SESSION['fname'].'</button>
@@ -111,6 +114,7 @@
                       </div>
                     </div>';
                 }else {
+                    //IF the user in not logged-in, the system will Allow the user to Log-in or the Register
                     echo '<div class="dropdown">
                     <button class="dropbtn">My Account</button>
                     <div class="dropdown-content">
@@ -134,9 +138,7 @@
 
     <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
 
   </body>
 </html>
