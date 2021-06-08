@@ -80,6 +80,7 @@
 
                                 //Query for select all data from database using prepared statements
                                 $prodId = array_column($_SESSION['cart'],'product_id');
+                                
                                 $sQuery = "SELECT * FROM product";
                                 $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
                                 $result = $conn->query($sQuery);

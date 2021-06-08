@@ -49,7 +49,7 @@
                 
                 ';
             }else{
-                echo '<form action="login_form.php">
+                echo '<form action="login_form.php" method="post">
                 <div class = "row  text-center justify-content-center">
                 <div class="jumbotron " style="background-color:transparent;border-style:none;" >
                 <h6> You Must Log-In First to write a Review </h6>

@@ -5,12 +5,13 @@
         session_start();
     }
 
-    $rating = $review = "";
+    $rating ="0";
+    $review ="0";
     $ERRrating = $ERRreview = "";
     $curDate = date("Y/m/d");
     $username = $_SESSION['fname'];
 
-    //Getting Customer information
+    //Getting Customer informationlkjnjjhb
     $nQuery = "SELECT * FROM customer WHERE username = '$username'";
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     $nresult = $conn->query($nQuery);
@@ -18,10 +19,8 @@
     $custID = $userData['cust_id'];
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        
         $rating = $_POST['rating'];
         $review = $_POST['review'];
-        
         
         echo $rating;
         echo $review;

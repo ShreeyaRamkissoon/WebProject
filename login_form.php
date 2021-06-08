@@ -24,9 +24,9 @@
 
 
          if (empty($ERRORName) && empty($ERRPassWord)) {
-            echo 'in if statement';
+           
              require_once 'includes/db_connect.php';
-             echo 'connecting to database';
+            
 
              $sQuery = "SELECT * FROM customer WHERE username = '$name'";
 

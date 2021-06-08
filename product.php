@@ -78,7 +78,7 @@
             }
 
             .fa-star{
-               color: blue;
+               color: rebeccapurple;
             }
 
 
@@ -103,21 +103,30 @@
                         method: "POST", 
                         success:function(data){
                             console.log(data);
-                           // $("div#errorModal").modal();
-                            //$("div#errorModal p#errorText").html(result);
+                        
+                            if(data.length == 0){
+                                var table_str = '<h5 style="text-align:center">This Product has not been Reviewed yet<h5>';
+                            }else{
+                                var table_str = '<table class="table table-hover table-sm table-borderless"><thead><tr><th scope="col">Reviewer Name</th><th scope="col">Comment</th><th scope="col">Rating</th></tr></thead><tbody>';
+                            
+                                $.each(data , function(key,entry){
+                                    var stars = "";
+                                    table_str = table_str + "<tr>"
+                                    table_str = table_str + '<td>' + entry['fname'] + '</td>';
+                                    table_str = table_str + '<td>' + entry['comment'] + '</td>';
+                                    table_str = table_str + '<td>' ;
+                                        for (let i = 0; i < entry['rating']; i++) {
+                                            stars = stars + '<i class="fas fa-star"></i>';
+                                        }
+                                        table_str = table_str + stars;
+                                    table_str =table_str + '</td>';
+                                    table_str = table_str + "</tr>"; 
+                                });
 
-                            $.each(data , function(key,entry){
-                                $("div#errorModal div#body h6#rev_name").html(entry.fname+"<br>");
-                                
-                                $("div#errorModal div#body p#comment").html("Review : " + entry.comment+"<br>");
-                                
-                                for(i = 0 ; i < entry.rating ; i++){
-                                    
-                                    $("div#errorModal div#body p#rating").append('<i class="fas fa-star"></i>');
-                                }
-                             
-                            });
-                            //console.log("Calling Modal");
+                                table_str = table_str + "</tbody></table>";
+                            }
+
+                            $("div#errorModal div#body").html(table_str);
                             $("div#errorModal").modal();
 
                             
@@ -149,9 +158,7 @@
                   </button>
               </div>
               <div class="modal-body" id="body">
-                  <h6 style="text-align:center" id="rev_name"></h6>
-                  <p id="rating" ></p>
-                  <p id="comment" ></p>
+                  
               </div>
 
               </div>
