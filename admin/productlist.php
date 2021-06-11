@@ -17,7 +17,7 @@
         <title>View Product List</title>
 
         <style>
-            #productlist{
+            div#productlist{
                 position: absolute;
                 top: 20px;
                 right: 20px;
@@ -80,8 +80,7 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">In Stock</th>
-                                <th scope="col"></th>
-                            
+
                             </tr>
                         </thead>
                         <tbody>
@@ -109,10 +108,6 @@
                                 <td><?php echo $userResult['price']?></td>
                                 <td><?php echo $userResult['cname']?></td>
                                 <td><?php echo $userResult['instock']?></td>
-                                <td>
-                                    <input id="addInstock" type="image" src="../images/add.png" style="width: 25px;" value="<?php echo $userResult['prod_id']?>">  
-                                    <input id="remove" type="image" src="../images/remove.png" style="width: 25px;" value="<?php echo $userResult['prod_id']?>">
-                                </td>
                             </tr>
                             <?php 
                                 }
