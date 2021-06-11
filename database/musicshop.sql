@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2021 at 05:03 PM
+-- Generation Time: Jun 07, 2021 at 11:12 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -34,6 +34,14 @@ CREATE TABLE `admin` (
   `admin_email` varchar(100) NOT NULL,
   `admin_password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_fname`, `admin_lname`, `admin_email`, `admin_password`) VALUES
+(1, 'Jeff', 'Bezos', 'jeff.bezos@email.com', 'password001'),
+(2, 'Jonathan', 'Broady', 'something@email.com', 'test');
 
 -- --------------------------------------------------------
 
@@ -110,7 +118,8 @@ INSERT INTO `customer` (`cust_id`, `fname`, `lname`, `gender`, `dob`, `email`, `
 (3, 'Jonathan', 'Broady', 'Male', '2000-02-05', 'email@email.com', 'Street', 'City', 'Jonathan1', '1234', 12345678),
 (4, 'Samuel', 'Kane', 'Female', '2000-06-15', 'ablsa@email.com', 'Street', 'Labah', 'Samuel1', '123456', 12345678),
 (6, 'Danny', 'Denzongpa', 'Male', '1996-01-08', 'danny145@gmail.com', 'Cassis Street', 'Plouis', 'dan123', '5678', 56345678),
-(7, 'Jessica', 'Gambit', 'Female', '1995-02-22', 'jess@yahoo.com', 'Royal Road', 'Moka', 'jess12', '54321', 56784362);
+(7, 'Jessica', 'Gambit', 'Female', '1995-02-22', 'jess@yahoo.com', 'Royal Road', 'Moka', 'jess12', '54321', 56784362),
+(8, 'Atomic', 'Bomb', 'Female', '2018-08-20', 'atomic.bomb@nuclear.com', 'Hiroshima', 'Nagasaki', 'atom', 'bomb', 1234567);
 
 -- --------------------------------------------------------
 
@@ -187,6 +196,30 @@ INSERT INTO `orders` (`order_id`, `order_price`, `order_date`, `cust_id`, `drive
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders2`
+--
+
+CREATE TABLE `orders2` (
+  `prod_id` int(11) NOT NULL,
+  `cust_id` int(11) NOT NULL,
+  `date_purchase` date NOT NULL,
+  `driver_id` int(11) NOT NULL,
+  `reviewed` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders2`
+--
+
+INSERT INTO `orders2` (`prod_id`, `cust_id`, `date_purchase`, `driver_id`, `reviewed`) VALUES
+(1, 2, '2021-06-06', 2, 1),
+(1, 8, '2021-06-02', 5, 1),
+(7, 8, '2021-06-02', 5, 1),
+(8, 8, '2021-06-02', 5, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `order_details`
 --
 
@@ -207,7 +240,7 @@ CREATE TABLE `product` (
   `pname` varchar(50) NOT NULL,
   `description` varchar(100) NOT NULL,
   `price` float NOT NULL,
-  `image` varchar(200) NOT NULL COMMENT 'in jpeg format',
+  `image` varchar(255) DEFAULT NULL,
   `instock` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL
@@ -238,6 +271,32 @@ CREATE TABLE `product update` (
   `date` date NOT NULL,
   `p_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prod_reviews`
+--
+
+CREATE TABLE `prod_reviews` (
+  `rev_id` int(11) NOT NULL,
+  `prod_id` int(11) NOT NULL,
+  `cust_id` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `flagged` int(11) NOT NULL,
+  `banned` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `prod_reviews`
+--
+
+INSERT INTO `prod_reviews` (`rev_id`, `prod_id`, `cust_id`, `comment`, `rating`, `date`, `flagged`, `banned`) VALUES
+(7, 7, 8, 'Very Good', 4, '0000-00-00', 0, 0),
+(8, 1, 8, 'Very Good as Well', 4, '0000-00-00', 0, 0),
+(9, 1, 2, 'Very VEry Good Guitar', 4, '0000-00-00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -313,6 +372,14 @@ ALTER TABLE `orders`
   ADD KEY `driver_id` (`driver_id`);
 
 --
+-- Indexes for table `orders2`
+--
+ALTER TABLE `orders2`
+  ADD PRIMARY KEY (`prod_id`,`cust_id`,`date_purchase`),
+  ADD KEY `cust_id` (`cust_id`),
+  ADD KEY `driver_id` (`driver_id`);
+
+--
 -- Indexes for table `order_details`
 --
 ALTER TABLE `order_details`
@@ -335,6 +402,14 @@ ALTER TABLE `product update`
   ADD KEY `prod_id` (`prod_id`);
 
 --
+-- Indexes for table `prod_reviews`
+--
+ALTER TABLE `prod_reviews`
+  ADD PRIMARY KEY (`rev_id`),
+  ADD KEY `prod_id` (`prod_id`),
+  ADD KEY `cust_id` (`cust_id`);
+
+--
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
@@ -349,7 +424,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -367,7 +442,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `driver`
@@ -394,6 +469,12 @@ ALTER TABLE `product`
   MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `prod_reviews`
+--
+ALTER TABLE `prod_reviews`
+  MODIFY `rev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
@@ -417,6 +498,14 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`driver_id`) REFERENCES `driver` (`driver_id`);
 
 --
+-- Constraints for table `orders2`
+--
+ALTER TABLE `orders2`
+  ADD CONSTRAINT `orders2_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `product` (`prod_id`),
+  ADD CONSTRAINT `orders2_ibfk_2` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  ADD CONSTRAINT `orders2_ibfk_3` FOREIGN KEY (`driver_id`) REFERENCES `driver` (`driver_id`);
+
+--
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
@@ -436,6 +525,13 @@ ALTER TABLE `product`
 ALTER TABLE `product update`
   ADD CONSTRAINT `product update_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
   ADD CONSTRAINT `product update_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `product` (`prod_id`);
+
+--
+-- Constraints for table `prod_reviews`
+--
+ALTER TABLE `prod_reviews`
+  ADD CONSTRAINT `prod_reviews_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `orders2` (`prod_id`),
+  ADD CONSTRAINT `prod_reviews_ibfk_2` FOREIGN KEY (`cust_id`) REFERENCES `orders2` (`cust_id`);
 
 --
 -- Constraints for table `reviews`
