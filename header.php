@@ -9,9 +9,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/ac005c1be0.js" crossorigin="anonymous"></script>
     <style>
+
+.search {
+width: 35%;
+}
+
+form.example {
+  box-sizing: border-box;
+}
+
+
+      /* Style the search field */
+form.example input[type=text] {
+  padding: 6px;
+  font-size: 15px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 6px;
+  background: grey;
+  color: white;
+  font-size: 15px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: black;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
       .dropbtn {
         
           background-color: none;
@@ -44,6 +89,11 @@
           display: block;
         }
 
+        .search-header {
+            margin: 10px;
+
+        }
+
         /* Change color of dropdown links on hover */
       .dropdown-content a:hover {background-color: #ddd;}
 
@@ -67,6 +117,16 @@
                     <a class="navbar-brand" href="index.php"><img src="images/mylogo.png" class="logo" alt="logo"></a>
                 </div>
                 <!-- End Header Navigation -->
+              
+                <div class="search">
+                <form class="example" action="search.php" method="POST">
+                <input type="text" placeholder="Search" name="search">
+                <button type="submit"  name="submit-search"><i class="fa fa-search"></i></button>
+                </form>
+                 </div>
+
+                
+
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
@@ -76,6 +136,8 @@
                         <li class="nav-item "><a href="category.php" class="nav-link">Category</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="service.php">Our Service</a></li>
+
+                       
 
                         <!-- Checking if user is already logged-in using the fname variable in Session Variable
                              If user is already logged in Then only he will be alble to access the cart, otherwise 
@@ -100,6 +162,9 @@
                     
                       
                 </div>
+
+                
+
                 <?php 
                 // Checking is user is logged in
                 if (isset($_SESSION['fname'])) {

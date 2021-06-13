@@ -21,7 +21,7 @@
         <style>
         
         body{
-            background-image: url("images/backG.jpg");
+            background-image: url("images/trial1.jpg");
         }
         .card{
             margin: 10px;
@@ -41,7 +41,7 @@
         <?php include 'header.php'; 
         ?>
         <!--Title -->
-        <h1 style="text-align:center;color:white;">Shop By Category </h1>
+        <h1 style="text-align:center;color:black;">Shop By Category </h1>
         <div class="container">
         <div class="row text-center ">
 

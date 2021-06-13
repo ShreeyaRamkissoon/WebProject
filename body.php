@@ -68,11 +68,11 @@
         ?>
         <div class="col-sm-3 my-3 my-md-0">
                 <form action="category.php" method="post">
-                <div class="card shadow" style="width: 18rem;">
+                <div class="card shadow" style="width: 18rem;height: 38rem;">
                     <img src="images/<?php echo $userResult['image'] ?>" class="card-img-top">    
                         <div class="card-body">
                         <h5 class="card-title"><?php echo $userResult['pname']?></h5>
-                        <div class="container" style="padding-bottom:20px;padding-left:0px;"> <p class="card-text"><?php echo $userResult['description']?></p></div>
+                       <div class="container" style="padding-bottom:20px;padding-left:0px;"> <p class="card-text"><?php echo $userResult['description']?></p></div>
                         <h4><?php echo '$ '.$userResult['price']; ?></h4>
                         <button type="submit" class="btn btn-warning my-3"name="add">Buy Product <i class="fas fa-shopping-cart"></i></button>
                         </div>
