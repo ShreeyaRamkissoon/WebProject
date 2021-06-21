@@ -18,7 +18,7 @@
         //We are testing something
         //after add to cart button has been pressed
         if((isset($_POST['add'])) && isset($_SESSION['fname']) ){
-            print_r($_POST['product_id']);
+            //print_r($_POST['product_id']);
             //add product id to the session variable
             if(isset($_SESSION['cart'])){ 
                 //Session Variable is already set
@@ -29,7 +29,7 @@
                     //if product id is in the array
                     //display message
                     echo "<script>alert('Product is already in the cart')</script>";
-                    echo "<script>window.location='product.php'</script>";
+                    echo "<script>window.location='search.php'</script>";
                 }else{
                     //if product is not in the array
                     $count = count($_SESSION['cart']); //count the number of elements in the variable
@@ -37,7 +37,7 @@
                         'product_id'=>$_POST['product_id'] //
                     ); //create array to store product id
                     $_SESSION['cart'][$count] = $item_array;
-                    echo "<script>window.location='product.php'</script>";
+                    echo "<script>window.location='search.php'</script>";
                 
 
                 }
@@ -49,7 +49,7 @@
 
             //create new Session Variable
             $_SESSION['cart'][0]=$item_array; //insert array item in cart session variable at index 0
-            echo "<script>window.location='product.php'</script>";
+            echo "<script>window.location='search.php'</script>";
 
             }
         }else {
@@ -125,7 +125,24 @@ else{
     echo "There are no results matching your search!";
 }
 */          $search = "";
-            $search = ($_POST['search']);
+            if(isset($_SESSION['searched_prod'])){
+                if(isset($_POST['search'])){
+                    array_push($_SESSION['searched_prod'],$_POST['search']);
+                    $search = $_POST['search'];
+                }else{
+                    $count = count($_SESSION['searched_prod']);
+                    $search = $_SESSION['searched_prod'][$count -1];
+                }
+            }else{
+                $_SESSION['searched_prod'] = array();
+                if(isset($_POST['search'])){
+                    array_push($_SESSION['searched_prod'],$_POST['search']);
+                    $search = $_POST['search'];
+                }else{
+                    echo "<script>window.location='index.php'</script>";
+                }
+            }
+            
 
 
             $sQuery = "SELECT * FROM product WHERE pname LIKE '%$search%' OR description LIKE '%$search%' " ;
@@ -137,7 +154,7 @@ else{
             
             ?>
             <div class="col-sm-4 my-3 my-md-0">
-                <form action="index.php" method="post">
+                <form action="search.php" method="post">
                 <div class="card shadow" style="width: 18rem;">
                     <img id="prod_Detail" src="images/<?php echo $userResult['image'] ?>" class="card-img-top">  
                     <div class="card-body">
@@ -160,18 +177,9 @@ else{
               
               <?php 
 
-            }
+             }
 
-        
-
-
-
-
-
-
-
-
-?>
+            ?>
 </div> 
 </div>
 </body>

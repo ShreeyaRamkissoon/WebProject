@@ -48,13 +48,29 @@
                 color: white;
             }
 
-            div#selector{
-                
-                top: 50px;
-                right: 30px;
+            #removeProducts{
+                position: absolute;
+                top: 1750px;
+                right:400px;
                 width: 80vh;
-                height: 600px;
+                height: 400px;
+                font-size: 15px;
+                background-color: rgb(0, 0, 0);
+                padding: 10px;
+                color: white;
+
             }
+
+            div#content{
+                position: absolute;
+                top: 1750px;
+                right: 100px;
+                width: 40vh;
+                height: 300px;               
+            }
+
+
+            
         </style>
 
         <script>
@@ -87,21 +103,85 @@
                 	
             });
 
+            //Product List
+            var obj_json3 ;
+            var url3 = "include/getProducts.php";
+            $.getJSON( url3, function(data3) {
+               
+                    obj_json3 = data3;
+                    //Let us populate the drop down list
+                    //Reference https://www.codebyamir.com/blog/populate-a-select-dropdown-list-with-json
+                    $.each(data3, function (key, entry3) {
+                    $("div#updateProducts select#products").append($('<option></option>').attr('value', entry3.prod_id).text(entry3.pname));
+                    $("div#removeProducts select#products").append($('<option></option>').attr('value', entry3.prod_id).text(entry3.pname));
+                    });
+                	
+            });
+
             $(document).ready(function(){
 
-                $(document).on('click',"div#selector input#addP",function(){
-                    var elmnt = document.getElementById("addProduct");
-                    elmnt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                $(document).on('change' ,"div#updateProducts select#products", function(){
+                    console.log();
+                    var proID = $(this).val();
+
+                    $.each(obj_json3, function (key, entry4) {
+                        if(entry4.prod_id == proID){
+                            $('input#UPname').val(entry4.pname); 
+                            $('textarea#UPdescription').val(entry4.description);
+                            $('input#UPprice').val(entry4.price);
+                            $('input#UPquantity').val(entry4.instock);
+                            $('#updateProducts select#category').val(entry4.category_id);
+                            $('#updateProducts select#brand').val(entry4.brand_id);
+                            $('#updateProducts input#imgPath').val(entry4.image);
+                        }
+                    });
                 });
 
-                $(document).on('click',"div#selector input#updP",function(){
-                    var elmnt2 = document.getElementById("updateProducts");
-                    elmnt2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                //Removing Products
+                $(document).on('change','div#removeProducts select#products', function(){
+                    //console.log($(this).val());
+                    var ID = $(this).val();
+                    var img_path = "../images/";
+                    $.each(obj_json3, function (key, entry5) {
+                        if(entry5.prod_id == ID){
+                            img_path = img_path + entry5.image;
+                            //console.log(img_path);
+                        }
+
+                    });
+
+                    $('div#content img').attr("src",img_path);
+                   
+                });
+
+                $(document).on('click',"button#buttonRemove",function(){
+                    var prodID =  $("div#removeProducts select#products").val();
+                    //console.log(prodID);
+
+                    var url = "http://localhost/WebProject_WebServices/admin/remove/" + prodID;
+                    $.ajax({
+                        url: url,
+                        //accepts: "application/json",
+                        headers:{Accept:"application/json" },
+                        
+                        method: "POST", 
+                        data:{},
+                        error: function(xhr){
+                            
+                                alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                        }
+                    })
+                    .done(function(data)
+                    {	
+                        //$("span#createresult").html();
+                        $("#errorModal p#errorText").html("Product removed successfully");
+                        $("#errorModal").modal();
+                    })//.done(function(data)
+                    ;//$.ajax({
                 });
 
 
-
-
+                //Creating Products WEB_SERVICE
                 $(document).on('click',"#buttonSub",function(){
                     
                     var fileInput = document.getElementById('fileChooser');   
@@ -113,6 +193,7 @@
                     var quantity = $('input#quantity').val();
                     var category = $('select#category').val();
                     var brand = $('select#brand').val();
+                    
 
                     //console.log(quantity);
 
@@ -144,9 +225,54 @@
                         $("#errorModal").modal();
                     })//.done(function(data)
                     ;//$.ajax({
+                    
 
 
+                });
 
+
+                //Click on Update Button
+                $(document).on('click','button#buttonUpdate',function(){
+                    //console.log("Button Clicked");
+                    var pname =  $('input#UPname').val(); 
+                    var descrip =  $('textarea#UPdescription').val();
+                    var price = $('input#UPprice').val();
+                    var quantity = $('input#UPquantity').val();
+                    var cat = $('#updateProducts select#category').val();
+                    var brand = $('#updateProducts select#brand').val();
+                    var prodID = $("div#updateProducts select#products").val();
+                    var img = $('#updateProducts input#imgPath').val();
+
+                    //console.log(pname + " " + descrip + " " + price + " " + quantity + " " +cat + " " + brand);
+                    var url = "http://localhost/WebProject_WebServices/admin/update/" + prodID ;
+		
+                    $.ajax({
+                        url: url,
+                        //accepts: "application/json",
+                        headers:{Accept:"application/json" },
+                        
+                        method: "POST", 
+                        data:{  pname:pname,
+                                price:price,
+                                description:descrip,
+                                quantity:quantity,
+                                category:cat,
+                                brand:brand,
+                                img:img
+
+                        },
+                        error: function(xhr){
+                            
+                                alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                        }
+                    })
+                    .done(function(data)
+                    {	
+                        //$("span#createresult").html();
+                        $("#errorModal p#errorText").html("Product Updated Sucessfully");
+                        $("#errorModal").modal();
+                    })//.done(function(data)
+                    ;//$.ajax({
                 });
 
 
@@ -161,20 +287,16 @@
         <!-- END OF BOOTSTRAP -->
 
     <nav class="nav flex-column" id="navigation_bar">
-        <a class="nav-link" href="main.php" active ><i class="fas fa-columns fa-1.8x"></i>Dashboard</a>
-        <a class="nav-link" href="adduser.php">Add User</a>
-        <a class="nav-link" href="productlist.php">Product List</a>
-        <a class="nav-link" href="#">Orders</a>
-        <a class="nav-link" href="addproduct.php">Add Product</a>
-        <a class="nav-link" href="#">Manage User</a>
-        <a class="nav-link" href="#">Log Out</a>
+    <a class="nav-link" href="main.php" active ><i class="fas fa-columns fa-1.8x"></i>Dashboard</a>
+      <a class="nav-link" href="adduser.php">Add User</a>
+      <a class="nav-link" href="productlist.php">Product List</a>
+      <a class="nav-link" href="orders.php">Orders</a>
+      <a class="nav-link" href="addproduct.php">Manage Products</a>
+      <a class="nav-link" href="#">Manage User</a>
+      <a class="nav-link" href="#">Log Out</a>
     </nav>
 
-    <div class="selector">
-        <input type="button" id="addP" class="btn" style="background-color: rgb(179, 82, 179); color:white;" value="Add Product"><br><br>
-        <input type="button" id="updP" class="btn" style="background-color: rgb(179, 82, 179); color:white;" value="Update Product"><br>
-    </div>
-
+    
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -243,43 +365,72 @@
             <form method="post">
           
                     <label for="exampleFormControlSelect1">Select Products</label>
-                    <select class="form-control" id="brand">                    
+                    <select class="form-control" id="products">                    
                     </select><br>
 
 
                     <label  for="name">Product Name :</label>
-                    <input class="form-control input-borders" placeholder="Ultimate Guitar" id="name" >
+                    <input class="form-control input-borders"  id="UPname" >
 
                     <br>
                     <label for="exampleFormControlTextarea1">Update Description</label>
-                    <textarea class="form-control" maxlength="255" id="description" placeholder="Enter Description Here"  rows="3"></textarea>
+                    <textarea class="form-control" maxlength="255" id="UPdescription" placeholder="Enter Description Here"  rows="3"></textarea>
 
 
                     <br>
                     <label for="email">Update Price</label>                           
-                    <input class="form-control input-borders" placeholder="Rs ...."  id="price" >
+                    <input class="form-control input-borders" placeholder="Rs ...."  id="UPprice" >
 
                     <br>
                     <label for="password">Update Quantity</label>                        
-                    <input class=" form-control input-borders"placeholder="Quantity" id="quantity" >
+                    <input class=" form-control input-borders" id="UPquantity">
                     <br>
-                    <label for="exampleFormControlSelect1">Change Category</label>
+                    <label for="exampleFormControlSelect1">Change Category (Update Category if Needed)</label>
                     <select class="form-control" id="category" style="color:black">
                     
                     </select><br>
 
-                    <label for="exampleFormControlSelect1">Select Brand</label>
+                    <label for="exampleFormControlSelect1">Select Brand (Update Brand if Needed)</label>
                     <select class="form-control" id="brand">                    
                     </select><br>
 
-                    <label for="exampleFormControlFile1">Product Image</label>
-                    <input type="file" class="form-control-file" id="fileChooser"><br>
+                    <input type="hidden" class=" form-control input-borders" id="imgPath">
+
+                    <!--<label for="exampleFormControlFile1">Product Image</label>
+                    <input type="file" class="form-control-file" id="fileChooser"><br> -->
 
                     <div class=" col text-center">
-                        <button type="button" class="btn" style="background-color: rgb(179, 82, 179); color:white;" id="buttonSub">Add Admin</button>
+                        <button type="button" class="btn" style="background-color: rgb(179, 82, 179); color:white;" id="buttonUpdate">Update Product</button>
                     </div>
             </form>
         
         </div>
+
+        <!-- //////////////////////////////////////////////// REMOVE PRODUCT ///////////////////////////// -->
+        <div id="removeProducts">
+           
+            <h2 style="text-align: center;">Remove Product</h2>
+
+            <form method="post">
+          
+                    <label for="exampleFormControlSelect1">Select Products</label>
+                    <select class="form-control" id="products">                    
+                    </select><br>
+
+                    
+
+                    <div class=" col text-center">
+                        <button type="button" class="btn" style="background-color: rgb(179, 82, 179); color:white;" id="buttonRemove">Remove Product</button>
+                    </div>
+
+                    
+            </form>
+        
+        </div>
+
+        <div id="content" class="card">
+                        <img src="../images/mylogo.png" alt="Product" class="card-img" id="img">
+        </div><br>
+
     </body>
 </html>

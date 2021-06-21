@@ -45,6 +45,8 @@
                     //$_SESSION['fname'] = $name;
                    //echo '<script>window.location="index.php"</script>';
                    echo 'Login Successfull';
+                   $_SESSION['admin'] = $userResult['admin_fname']; // Assigning Admin name in Session for login Successfull
+                   
                 }else {
                     $Msg = "You Entered the wrong Password. Please try again";
                     echo $Msg;

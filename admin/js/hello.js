@@ -13,8 +13,13 @@ function Hello(){
             method: "POST", 
             success:function(result){
                 console.log(result);
-                $("div#errorModal").modal();
-                $("div#errorModal p#errorText").html(result);
+                if(result == "Login Successfull"){
+                    window.location = "main.php";
+                }else{
+                    $("div#errorModal").modal();
+                    $("div#errorModal p#errorText").html(result);  
+                }
+                
                 
         
             },

@@ -174,7 +174,8 @@ form.example::after {
                       <button class="dropbtn">Hello '.$_SESSION['fname'].'</button>
                       <div class="dropdown-content">
                         <a href="log_out.php">Log Out</a>
-                        <a href="write_reviews.php">Write Reviews</a>
+                        <a href="write_reviews.php">Review website</a>
+                        <a href="prod_reviews.php">Review products</a>
                       
                       </div>
                     </div>';

@@ -73,11 +73,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     
   <nav class="nav flex-column" id="navigation_bar">
-      <a class="nav-link" href="main.php" active ><i class="fas fa-columns fa-1.8x"></i>Dashboard</a>
-      <a class="nav-link" href="adduser.php">Add Admin</a>
+  <a class="nav-link" href="main.php" active ><i class="fas fa-columns fa-1.8x"></i>Dashboard</a>
+      <a class="nav-link" href="adduser.php">Add User</a>
       <a class="nav-link" href="productlist.php">Product List</a>
-      <a class="nav-link" href="#">Orders</a>
-      <a class="nav-link" href="#">Add Product</a>
+      <a class="nav-link" href="orders.php">Orders</a>
+      <a class="nav-link" href="addproduct.php">Manage Products</a>
       <a class="nav-link" href="#">Manage User</a>
       <a class="nav-link" href="#">Log Out</a>
    </nav>

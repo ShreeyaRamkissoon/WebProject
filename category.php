@@ -14,11 +14,15 @@
     }
 
 ?>
-<html>
-    
-    <head>
-        <title>Category</title>
-        <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
         
         body{
             background-image: url("images/trial1.jpg");
@@ -34,11 +38,9 @@
             max-height: 10cm;
         }
     </style>
-
-    </head>
-
-    <body>
-        <?php include 'header.php'; 
+</head>
+<body>
+<?php include 'header.php'; 
         ?>
         <!--Title -->
         <h1 style="text-align:center;color:black;">Shop By Category </h1>
@@ -77,7 +79,5 @@
     </div>
     
     <?php include 'footer.php' ?>
-    </body>
-
-
+</body>
 </html>

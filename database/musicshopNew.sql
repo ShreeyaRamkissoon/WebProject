@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2021 at 11:12 PM
+-- Generation Time: Jun 21, 2021 at 01:43 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -41,7 +41,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`admin_id`, `admin_fname`, `admin_lname`, `admin_email`, `admin_password`) VALUES
 (1, 'Jeff', 'Bezos', 'jeff.bezos@email.com', 'password001'),
-(2, 'Jonathan', 'Broady', 'something@email.com', 'test');
+(2, 'Jonathan', 'Broady', 'something@email.com', 'test'),
+(3, 'NewAdmin', 'Admin', 'admin.ad@email.com', '1234');
 
 -- --------------------------------------------------------
 
@@ -105,21 +106,23 @@ CREATE TABLE `customer` (
   `city` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `phone` int(11) DEFAULT NULL
+  `phone` int(11) DEFAULT NULL,
+  `lattitude` decimal(8,6) DEFAULT NULL,
+  `longitude` decimal(9,6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`cust_id`, `fname`, `lname`, `gender`, `dob`, `email`, `street`, `city`, `username`, `password`, `phone`) VALUES
-(1, 'Shreeya', 'Ramkissoon', 'Female', '2000-03-11', 'shreeyaramkissoon@gmail.com', 'Royal Road', 'Pamplemousses', 'shree', '1234', 56789762),
-(2, 'Roy', 'Smith', 'Male', '2000-05-04', 'bla@email.com', 'City', 'Reduit', 'job123', '147', 12345678),
-(3, 'Jonathan', 'Broady', 'Male', '2000-02-05', 'email@email.com', 'Street', 'City', 'Jonathan1', '1234', 12345678),
-(4, 'Samuel', 'Kane', 'Female', '2000-06-15', 'ablsa@email.com', 'Street', 'Labah', 'Samuel1', '123456', 12345678),
-(6, 'Danny', 'Denzongpa', 'Male', '1996-01-08', 'danny145@gmail.com', 'Cassis Street', 'Plouis', 'dan123', '5678', 56345678),
-(7, 'Jessica', 'Gambit', 'Female', '1995-02-22', 'jess@yahoo.com', 'Royal Road', 'Moka', 'jess12', '54321', 56784362),
-(8, 'Atomic', 'Bomb', 'Female', '2018-08-20', 'atomic.bomb@nuclear.com', 'Hiroshima', 'Nagasaki', 'atom', 'bomb', 1234567);
+INSERT INTO `customer` (`cust_id`, `fname`, `lname`, `gender`, `dob`, `email`, `street`, `city`, `username`, `password`, `phone`, `lattitude`, `longitude`) VALUES
+(1, 'Shreeya', 'Ramkissoon', 'Female', '2000-03-11', 'shreeyaramkissoon@gmail.com', 'Royal Road', 'Pamplemousses', 'shree', '1234', 56789762, NULL, NULL),
+(2, 'Roy', 'Smith', 'Male', '2000-05-04', 'bla@email.com', 'City', 'Reduit', 'job123', '147', 12345678, '-20.233237', '57.499630'),
+(3, 'Jonathan', 'Broady', 'Male', '2000-02-05', 'email@email.com', 'Street', 'City', 'Jonathan1', '1234', 12345678, NULL, NULL),
+(4, 'Samuel', 'Kane', 'Female', '2000-06-15', 'ablsa@email.com', 'Street', 'Labah', 'Samuel1', '123456', 12345678, NULL, NULL),
+(6, 'Danny', 'Denzongpa', 'Male', '1996-01-08', 'danny145@gmail.com', 'Cassis Street', 'Plouis', 'dan123', '5678', 56345678, NULL, NULL),
+(7, 'Jessica', 'Gambit', 'Female', '1995-02-22', 'jess@yahoo.com', 'Royal Road', 'Moka', 'jess12', '54321', 56784362, NULL, NULL),
+(8, 'Atomic', 'Bomb', 'Female', '2018-08-20', 'atomic.bomb@nuclear.com', 'Hiroshima', 'Nagasaki', 'atom', 'bomb', 1234567, '-20.248146', '57.610924');
 
 -- --------------------------------------------------------
 
@@ -252,12 +255,13 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`prod_id`, `pname`, `description`, `price`, `image`, `instock`, `category_id`, `brand_id`) VALUES
 (1, 'Gibson PRS Guitar', 'PRS Hollow Body. Very Good Guitar.', 999.9, 'prs.jpg', 10, 1, 2),
-(2, 'Mitchell Acoustic s Guitar', 'Very good Guitar', 989.9, 'ibanez1.jpg', 10, 1, 4),
 (3, 'Alvarez Regent Electric Guitar ', 'SYS250 pickup and 3-band EQ with tuner', 199, 'guitar3.jpg', 5, 1, 3),
 (4, 'Ibanez Regent Guitar', 'Mahogany neck, bi-level rosewood fingerboard', 999.9, 'ibanez2.jpg', 10, 1, 1),
 (5, 'Fender', 'This 1968 Fender Stratocaster  is almost too good to be true.', 4999, 'fender1.jpg', 10, 1, 1),
 (7, 'Gibson Bass 5-String series', 'High-mass adjustable saddle bridge', 245.99, 'ibanez3.jpg', 8, 2, 2),
-(8, 'Ibanez Acoustic Bass', 'High quality and refined sound', 999.9, 'bass1.jpg', 10, 2, 1);
+(8, 'Ibanez Acoustic Bass', 'High quality and refined sound', 999.9, 'bass1.jpg', 10, 2, 1),
+(14, 'Microphone', 'Best Microphone Ever', 511, 'piano1.jpg', 10, 6, 3),
+(17, 'Acoustic Guitar ', 'Intermidiate Acoustic Guitar', 256, 'guitar5.jpg', 10, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -295,7 +299,7 @@ CREATE TABLE `prod_reviews` (
 
 INSERT INTO `prod_reviews` (`rev_id`, `prod_id`, `cust_id`, `comment`, `rating`, `date`, `flagged`, `banned`) VALUES
 (7, 7, 8, 'Very Good', 4, '0000-00-00', 0, 0),
-(8, 1, 8, 'Very Good as Well', 4, '0000-00-00', 0, 0),
+(8, 1, 8, 'Very Good as Well', 5, '0000-00-00', 0, 0),
 (9, 1, 2, 'Very VEry Good Guitar', 4, '0000-00-00', 0, 0);
 
 -- --------------------------------------------------------
@@ -424,7 +428,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -466,7 +470,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `prod_reviews`
