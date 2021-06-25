@@ -176,6 +176,7 @@ form.example::after {
                         <a href="log_out.php">Log Out</a>
                         <a href="write_reviews.php">Review website</a>
                         <a href="prod_reviews.php">Review products</a>
+                        <a href="updateAcc.php">Update Account</a>
                       
                       </div>
                     </div>';

@@ -42,6 +42,7 @@
                  //if username exists
                  if ($userResult['password'] == $passWord) {
                     $_SESSION['fname'] = $name;
+                    $_SESSION['user_id'] = $userResult['cust_id'];
                     echo '<script>window.location="index.php"</script>';
                  }else {
                      $Msg = "You Entered the wrong Password. Please try again";

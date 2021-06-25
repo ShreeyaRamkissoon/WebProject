@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://example.com/example.json",
+  "type": "array",
+  "title": "The root schema",
+  "additionalItems": true,
+  "items": {
+      "$id": "#/items",
+      "anyOf": [
+          {
+              "type": "object",
+              "required": [
+                  "cust_id",
+                  "fname",
+                  "lname",
+                  "gender",
+                  "dob",
+                  "email",
+                  "street",
+                  "city",
+                  "username",
+                  "password",
+                  "phone",
+                  "lattitude",
+                  "longitude"
+              ],
+              "properties": {
+                  "cust_id": {                  
+                      "type": "integer"                     
+                  },
+                  "fname": {                     
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                 
+                  },
+                  "lname": {                      
+                      "type": "string", 
+                      "minLength": 1,
+				              "maxLength": 255                    
+                  },
+                  "gender": {                   
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                       
+                  },
+                  "dob": {                     
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                      
+                  },
+                  "email": {                      
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                      
+                  },
+                  "street": {                     
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                     
+                  },
+                  "city": {                     
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                       
+                  },
+                  "username": {                     
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                      
+                  },
+                  "password": {                      
+                      "type": "string",
+                      "minLength": 1,
+				              "maxLength": 255                       
+                  },
+                  "phone": {                     
+                      "type": "integer"                     
+                  },
+                  "lattitude": {                     
+                      "type": "number"                     
+                  },
+                  "longitude": {                    
+                      "type": "number"                    
+                  }
+              },
+              "additionalProperties": false
+          }
+      ]
+  }
+}
