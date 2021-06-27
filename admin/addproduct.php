@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -109,8 +110,6 @@
             $.getJSON( url3, function(data3) {
                
                     obj_json3 = data3;
-                    //Let us populate the drop down list
-                    //Reference https://www.codebyamir.com/blog/populate-a-select-dropdown-list-with-json
                     $.each(data3, function (key, entry3) {
                     $("div#updateProducts select#products").append($('<option></option>').attr('value', entry3.prod_id).text(entry3.pname));
                     $("div#removeProducts select#products").append($('<option></option>').attr('value', entry3.prod_id).text(entry3.pname));

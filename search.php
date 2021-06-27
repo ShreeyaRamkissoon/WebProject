@@ -66,16 +66,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <?php include 'header.php'; ?>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
      
         
-     <script src="https://kit.fontawesome.com/ac005c1be0.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/ac005c1be0.js" crossorigin="anonymous"></script>
    
    <style>
             .card{
@@ -96,8 +95,87 @@
 
 
         </style>
+        <script>
+            $(document).ready(function(){
+                $(document).on('click','div#reviews a',function(e){
+                    e.preventDefault();
+                    
+                    var prodID = $(this).attr('id');
+                    //console.log(prodID);
+                    $("div#errorModal div#body h6#rev_name").html("");
+                    $("div#errorModal div#body p#rating").html("");
+                    $("div#errorModal div#body p#comment").html("");
+
+                    $.ajax({
+                        url:"includes/getReviews.php", 
+                        data: { prod_id:prodID},
+                        accepts: "application/json",
+                        cache: false,
+                        method: "POST", 
+                        success:function(data){
+                            console.log(data);
+                        
+                            if(data.length == 0){
+                                var table_str = '<h5 style="text-align:center">This Product has not been Reviewed yet<h5>';
+                            }else{
+                                var table_str = '<table class="table table-hover table-sm table-borderless"><thead><tr><th scope="col">Reviewer Name</th><th scope="col">Comment</th><th scope="col">Rating</th></tr></thead><tbody>';
+                            
+                                $.each(data , function(key,entry){
+                                    var stars = "";
+                                    table_str = table_str + "<tr>"
+                                    table_str = table_str + '<td>' + entry['fname'] + '</td>';
+                                    table_str = table_str + '<td>' + entry['comment'] + '</td>';
+                                    table_str = table_str + '<td>' ;
+                                        for (let i = 0; i < entry['rating']; i++) {
+                                            stars = stars + '<i class="fas fa-star"></i>';
+                                        }
+                                        table_str = table_str + stars;
+                                    table_str =table_str + '</td>';
+                                    table_str = table_str + "</tr>"; 
+                                });
+
+                                table_str = table_str + "</tbody></table>";
+                            }
+
+                            $("div#errorModal div#body").html(table_str);
+                            $("div#errorModal").modal();
+
+                            
+                        },
+                        error: function(xhr){
+                            alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                        }
+
+                    });//Ajax
+                });
+            });
+        </script>
 </head>
 <body>
+<?php include 'header.php' ?>
+
+ <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle" style="color:rebeccapurple">Reviews</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body" id="body">
+                  
+              </div>
+
+              </div>
+          </div>
+        </div>
+    <!-- End of Modal --> 
     
 
 

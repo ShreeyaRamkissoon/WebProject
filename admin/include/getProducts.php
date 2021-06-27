@@ -1,4 +1,5 @@
 <?php 
+    require '../../vendor/autoload.php';
     include 'db_connect.php';
     $Query = "SELECT * FROM product";
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
@@ -6,7 +7,38 @@
 
     $array_result = $result->fetchAll(PDO::FETCH_ASSOC);
     
+     
      //var_dump($array_result);
-     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($array_result,JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
+    header('Content-Type: application/json; charset=utf-8');
+    $data = json_encode($array_result,JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
+     
+
+    use Opis\JsonSchema\{
+        Validator,
+        ValidationResult,
+        Errors\ErrorFormatter,
+    };
+    
+    // Create a new validator
+    $validator = new Validator();
+    
+    // Register our schema
+    $validator->resolver()->registerFile(
+        'http://example.com/example.json', 
+        'C:\xampp\htdocs\WebProject\admin\include\getProducts_Schema.json'
+    );
+    
+    // Decode $data
+    $data1 = json_decode($data);
+    
+    /** @var ValidationResult $result */
+    $result = $validator->validate($data1, 'http://example.com/example.json');
+    
+    if ($result->isValid()) {
+        //echo "Valid", PHP_EOL;
+        echo $data;
+    } else {
+        // Print errors
+        print_r((new ErrorFormatter())->format($result->error()));
+    }
 ?>

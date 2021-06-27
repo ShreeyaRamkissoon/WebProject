@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "http://example.com/example.json",
+    "type": "array",
+    "title": "The root schema",
+    "additionalItems": true,
+    "items": {
+        "$id": "#/items",
+        "anyOf": [
+            {
+                "type": "object",
+                "required": [
+                    "prod_id",
+                    "pname",
+                    "description",
+                    "price",
+                    "image",
+                    "instock",
+                    "category_id",
+                    "brand_id"
+                ],
+                "properties": {
+                    "prod_id": {      
+                        "type": "integer"                   
+                    },
+                    "pname": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "instock": {
+                        "type": "integer"
+                    },
+                    "category_id": {
+                        "type": "integer"
+                    },
+                    "brand_id": {
+                        "type": "integer"
+                    }
+                },
+                "additionalProperties": true
+            }
+        ]
+    }
+}
